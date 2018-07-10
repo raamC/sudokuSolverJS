@@ -64,11 +64,11 @@ class Grid {
     isSetValid(set) {
         let isValid = true;
         for (let i = 1; i < 9; i++) {
-            var indices = [];
-            var idx = set.indexOf(i);
-            while (idx != -1) {
-                indices.push(idx);
-                idx = set.indexOf(i, idx + 1);
+            const indices = [];
+            let index = set.indexOf(i);
+            while (index != -1) {
+                indices.push(index);
+                index = set.indexOf(i, index + 1);
             }
             if (indices.length > 1) {
                 isValid = false;
@@ -91,13 +91,16 @@ class Grid {
         let rowIndex = 0;
         while (this.gridArray[rowIndex].indexOf(0) == -1) {
             rowIndex++;
+            if (rowIndex == 9) {
+                return null;
+            }
         }
         return { row: rowIndex, column: this.gridArray[rowIndex].indexOf(0) }
     }
 
     getOptionsForSet(set) {
         const options = [];
-        for (let i = 0; i < 9; i++) {
+        for (let i = 1; i < 10; i++) {
             if (!set.includes(i)) {
                 options.push(i);
             }
@@ -115,7 +118,7 @@ class Grid {
         const boxOptions = this.getOptionsForSet(this.getBoxFromCell(r, c));
 
         const cellOptions = [];
-        for (let i = 0; i < 9; i++) {
+        for (let i = 1; i < 10; i++) {
             if (rowOptions.indexOf(i) != -1 && columnOptions.indexOf(i) != -1 && boxOptions.indexOf(i) != -1) {
                 cellOptions.push(i)
             }
@@ -125,7 +128,7 @@ class Grid {
 
     updateCellWithoutBranching(r, c) {
         const options = this.getOptionsForCell(r, c);
-        console.log(this.gridArray[r][c])
+        // console.log(this.gridArray[r][c])
         if (this.gridArray[r][c] == 0 && options.length == 1) {
             this.gridArray[r][c] = options[0]
         }

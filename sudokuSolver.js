@@ -21,16 +21,21 @@ grids.push(initialGrid);
 const initialCompleteness = initialGrid.calculateCompleteness();
 console.log(initialCompleteness);
 
-// console.log(initialGrid.findNextUnsolvedCell())
-initialGrid.updateGridWithoutBranching();
-initialGrid.updateGridWithoutBranching();
-// console.log(initialGrid.findNextUnsolvedCell())
+
+while(!initialGrid.isComplete()) {
+    initialGrid.updateGridWithoutBranching();
+}
+
+console.log(initialGrid.gridArray)
+console.log(initialGrid.calculateCompleteness())
+console.log(initialGrid.isValid())
 
 
 
-const nextCell = initialGrid.findNextUnsolvedCell();
-const options = initialGrid.getOptionsForCell(nextCell.row, nextCell.column);
-console.log(options);
+
+// const nextCell = initialGrid.findNextUnsolvedCell();
+// const options = initialGrid.getOptionsForCell(nextCell.row, nextCell.column);
+// console.log(options);
 
 // for (let i = 0; i < options.length; i++) {
 //     const childGrid = new Grid(initialGrid.gridArray, gridCounter, 1)
@@ -40,13 +45,6 @@ console.log(options);
 //     gridCounter++;
 
 // }
-
-// // console.log(initialGrid.gridArray)
-
-// // console.log(initialGrid.isValid)
-console.log(initialGrid.calculateCompleteness());
-
-
 
 // set up a grid class
 // to hold a snapshot in time
