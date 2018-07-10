@@ -1,16 +1,31 @@
 const Grid = require('./grid');
 
+
+var fs = require('fs');
+
+
+
+function readInputFile(filepath) {
+    return fs.readFileSync(filepath).toString('utf8').split(' \n').map(r => r.split(' ').map(c => parseInt(c)));
+}
+
+
+
+
+
 // input grid is considered as grid 0
-const input =
-    [[0, 4, 0, 0, 0, 0, 1, 7, 9],
-    [0, 0, 2, 0, 0, 8, 0, 5, 4],
-    [0, 0, 6, 0, 0, 5, 0, 0, 8],
-    [0, 8, 0, 0, 7, 0, 9, 1, 0],
-    [0, 5, 0, 0, 9, 0, 0, 3, 0],
-    [0, 1, 9, 0, 6, 0, 0, 4, 0],
-    [3, 0, 0, 4, 0, 0, 7, 0, 0],
-    [5, 7, 0, 1, 0, 0, 2, 0, 0],
-    [9, 2, 8, 0, 0, 0, 0, 6, 0]];
+// const input =
+//     [[0, 4, 0, 0, 0, 0, 1, 7, 9],
+//     [0, 0, 2, 0, 0, 8, 0, 5, 4],
+//     [0, 0, 6, 0, 0, 5, 0, 0, 8],
+//     [0, 8, 0, 0, 7, 0, 9, 1, 0],
+//     [0, 5, 0, 0, 9, 0, 0, 3, 0],
+//     [0, 1, 9, 0, 6, 0, 0, 4, 0],
+//     [3, 0, 0, 4, 0, 0, 7, 0, 0],
+//     [5, 7, 0, 1, 0, 0, 2, 0, 0],
+//     [9, 2, 8, 0, 0, 0, 0, 6, 0]];
+
+const input = readInputFile('./sudoku1.txt');
 
 
 let gridCounter = 1;
