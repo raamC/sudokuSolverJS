@@ -1,5 +1,5 @@
 class Grid {
-    constructor(gridArray,gridId,parent) {
+    constructor(gridArray, gridId, parent) {
         this.gridArray = gridArray;
         this.gridId = gridId;
         this.parent = parent;
@@ -128,13 +128,12 @@ class Grid {
 
     updateCellWithoutBranching(r, c) {
         const options = this.getOptionsForCell(r, c);
-        // console.log(this.gridArray[r][c])
         if (this.gridArray[r][c] == 0 && options.length == 1) {
-            this.gridArray[r][c] = options[0]
+            this.updateCell(r, c, options[0])
         }
     }
 
-    updateGridWithoutBranching() {
+    updateGridOnceWithoutBranching() {
         for (let r = 0; r < 9; r++) {
             for (let c = 0; c < 9; c++) {
                 this.updateCellWithoutBranching(r, c);
@@ -142,7 +141,19 @@ class Grid {
         }
     }
 
-    updateCell(r,c,value) {
+    updateGridWithoutBranching() {
+        let previousScore = this.calculateCompleteness();
+        this.updateGridOnceWithoutBranching();
+        let currentScore = this.calculateCompleteness();
+
+        while(previousScore != currentScore) {
+            previousScore = currentScore;
+            this.updateGridWithoutBranching();
+            currentScore = this.calculateCompleteness();
+        }
+    }
+
+    updateCell(r, c, value) {
         this.gridArray[r][c] = value;
     }
 
