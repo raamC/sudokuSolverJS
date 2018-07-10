@@ -50,10 +50,7 @@ class Grid {
             this.updateGridWithoutBranching();
             currentScore = this.calculateCompleteness();
         }
-        this.nextUnsolvedCell = this.findNextUnsolvedCell();
     }
-
-    // helper methods
 
     findNextUnsolvedCell() {
         let rowIndex = 0;
@@ -63,8 +60,13 @@ class Grid {
                 return null;
             }
         }
-        return { row: rowIndex, column: this.gridArray[rowIndex].indexOf(0) }
+        const nextUnsolvedCell = { row: rowIndex, column: this.gridArray[rowIndex].indexOf(0) };
+        this.nextUnsolvedCell = nextUnsolvedCell;
+        return nextUnsolvedCell;
     }
+
+
+    // helper methods
 
     isSetValid(set) {
         let isValid = true;
