@@ -3,18 +3,7 @@ class Grid {
         this.gridArray = gridArray;
         this.gridId = gridId;
         this.parent = parent;
-
-    }
-    
-    findNextUnsolvedCell() {
-        let rowIndex = 0;
-        while (this.gridArray[rowIndex].indexOf(0) == -1) {
-            rowIndex++;
-            if (rowIndex == 9) {
-                return null;
-            }
-        }
-        return { row: rowIndex, column: this.gridArray[rowIndex].indexOf(0) }
+        this.nextUnsolvedCell;
     }
 
     calculateCompleteness() {
@@ -59,10 +48,22 @@ class Grid {
             this.updateGridWithoutBranching();
             currentScore = this.calculateCompleteness();
         }
+        this.nextUnsolvedCell = this.findNextUnsolvedCell();
     }
 
-
     // helper methods
+
+    findNextUnsolvedCell() {
+        let rowIndex = 0;
+        while (this.gridArray[rowIndex].indexOf(0) == -1) {
+            rowIndex++;
+            if (rowIndex == 9) {
+                return null;
+            }
+        }
+        return { row: rowIndex, column: this.gridArray[rowIndex].indexOf(0) }
+    }
+
     isSetValid(set) {
         let isValid = true;
         for (let i = 1; i < 9; i++) {
