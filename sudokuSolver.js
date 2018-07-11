@@ -19,41 +19,6 @@ initialGrid.findNextUnsolvedCell();
 let grids = [];
 grids.push([initialGrid]);
 
-// let latestGeneration = grids[grids.length - 1];
-// while (latestGeneration.length != 1 || !latestGeneration[0].isComplete()) {
-
-//     const parentGrid = latestGeneration[0];
-//     const children = generateValidChildren(parentGrid);
-//     console.log(children)
-
-//     if (children.length > 0) {
-//         grids.push(children);
-//     } else {
-//         if (latestGeneration.length == 1) {
-//             grids.pop();
-//         } else {
-//             grids[grids.length - 1] = latestGeneration.filter(g => g.gridId != parentGrid.gridId);
-//         }
-//     }
-
-// // if(parentGrid.gridId==9){
-// //     console.log(parentGrid.gridArray)
-// // }
-
-//     latestGeneration = grids[grids.length - 1];
-//     // console.log(latestGeneration[0].calculateCompleteness())
-//     // console.log(latestGeneration[0].gridArray)
-
-//     console.log(`Number of generations: ${grids.length}`)
-//     console.log(`Number of grids in each generation: ${grids.map(gen => gen.length)}`)
-//     console.log(`Grid IDs in each generation: ${grids.map(gen => gen.map(grid => grid.gridId))}`)
-
-//     console.log(' ')
-
-
-console.log(grids[grids.length-1][0])
-
-
 while (!grids[grids.length - 1][0].isComplete()) {
     // while 1st child of final generation is not complete
 
@@ -61,16 +26,22 @@ while (!grids[grids.length - 1][0].isComplete()) {
         // if there is only 1 child in the generation
         
         const children = generateValidChildren(grids[grids.length - 1][0]);
+
         if (children.length === 0) {
             // if that child has no valid children of it's own, delete the generation
-            // and delete it's parent
+            // and delete and any ancestors that have no siblings
             console.log('a')
+
+            console.log(grids[grids.length-1][0])
             grids.pop()
-            grids[grids.length - 1] = grids[grids.length - 1].slice(1);
+            console.log(grids[grids.length-1][0])
+            grids[grids.length - 1].shift()
+            console.log(grids[grids.length-1][0])
+            
+        
         } else {
             // if there are valid children, create a new generation
             console.log('b')
-            
             grids.push(children);
         }
     }
@@ -87,22 +58,14 @@ while (!grids[grids.length - 1][0].isComplete()) {
         } else {
             console.log('d')
             // otherwise delete it from the generation
-            grids[grids.length - 1] = grids[grids.length - 1].slice(1);
+            grids[grids.length - 1].shift();
         }
-
     }
 
     console.log(`Number of generations: ${grids.length}`)
     console.log(`Number of grids in each generation: ${grids.map(gen => gen.length)}`)
-    console.log(`Grid IDs in each generation: ${grids.map(gen => gen.map(grid => grid.gridId))}`)
-    console.log(' ')
-    // console.log(grids[grids.length - 1][0])
-    
+    console.log(`Grid IDs in each generation: ${grids.map(gen => gen.map(grid => grid.gridId))} \n`)
 }
-
-
-
-
 
 
 // helper methods
