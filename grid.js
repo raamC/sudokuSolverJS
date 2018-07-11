@@ -1,10 +1,8 @@
 class Grid {
-    constructor(gridArray, gridId, parentId,generation,isHypothetical) {
+    constructor(gridArray, gridId, parentId) {
         this.gridArray = gridArray;
         this.gridId = gridId;
         this.parent = parentId;
-        this.generation = generation;
-        this.isHypothetical = isHypothetical;
         this.nextUnsolvedCell;
     }
 
