@@ -9,7 +9,7 @@ const isOptimized = false;
 let gridIdCounter = 1;
 const initialGrid = new Grid(input, gridIdCounter, 0);
 gridIdCounter++;
-console.log(`Initial score: ${initialGrid.calculateCompleteness()}%`);
+// console.log(`Initial score: ${initialGrid.calculateCompleteness()}%`);
 if (isOptimized) {
     initialGrid.updateGridWithoutBranching();
 }
@@ -24,7 +24,7 @@ while (!grids[grids.length - 1][0].isComplete()) {
 
     if (grids[grids.length - 1].length == 1) {
         // if there is only 1 child in the generation
-        
+
         const children = generateValidChildren(grids[grids.length - 1][0]);
 
         if (children.length === 0) {
@@ -32,28 +32,24 @@ while (!grids[grids.length - 1][0].isComplete()) {
             // and delete and any ancestors that have no siblings
             console.log('a')
 
-            console.log(grids[grids.length-1][0])
-            grids.pop()
-            console.log(grids[grids.length-1][0])
-            grids[grids.length - 1].shift()
-            console.log(grids[grids.length-1][0])
-            
-        
+            pruneToBranchPoint()
+
+
         } else {
             // if there are valid children, create a new generation
             console.log('b')
             grids.push(children);
         }
     }
-    
+
     else {
         // if there are multiple children in a generation
         // take the first child
-        const children = generateValidChildren(grids[grids.length-1][0])
-        if(children.length >0) {
+        const children = generateValidChildren(grids[grids.length - 1][0])
+        if (children.length > 0) {
             console.log('c')
             // if that child has valid children, create a new generation
-            
+
             grids.push(children);
         } else {
             console.log('d')
@@ -62,17 +58,19 @@ while (!grids[grids.length - 1][0].isComplete()) {
         }
     }
 
-    console.log(`Number of generations: ${grids.length}`)
     console.log(`Number of grids in each generation: ${grids.map(gen => gen.length)}`)
     console.log(`Grid IDs in each generation: ${grids.map(gen => gen.map(grid => grid.gridId))} \n`)
 }
 
+console.log(initialGrid.gridArray)
+console.log(grids[grids.length -1][0].gridArray)
 
 // helper methods
 
 function generateValidChildren(parentGrid) {
     const nextCell = parentGrid.findNextUnsolvedCell();
     const options = parentGrid.getOptionsForCell(nextCell.row, nextCell.column)
+    console.log(`Options: ${options}`)
     const children = [];
     for (let i = 0; i < options.length; i++) {
         const childGrid = new Grid(parentGrid.gridArray, gridIdCounter, parentGrid.gridId)
@@ -86,7 +84,20 @@ function generateValidChildren(parentGrid) {
             gridIdCounter++;
         }
     }
+    children.map(c => console.log(c.gridArray[0]))
     return children;
+}
+
+function pruneToBranchPoint() {
+    let lastGridToBePruned;
+    while (grids[grids.length - 1].length === 1) {
+        lastGridToBePruned = grids[grids.length - 1][0]
+        grids.pop()
+    }
+    const parentId = lastGridToBePruned.parentId;
+    console.log(`Parent Id: ${parentId}`)
+
+    grids[grids.length - 1] = grids[grids.length - 1].filter(g => g.gridId != parentId)
 }
 
 function readInputFile(filepath) {

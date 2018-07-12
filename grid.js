@@ -1,8 +1,8 @@
 class Grid {
     constructor(gridArray, gridId, parentId) {
-        this.gridArray = gridArray;
+        this.gridArray = JSON.parse(JSON.stringify(gridArray));
         this.gridId = gridId;
-        this.parent = parentId;
+        this.parentId = parentId;
         this.nextUnsolvedCell;
     }
 
